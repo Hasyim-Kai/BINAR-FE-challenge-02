@@ -1,6 +1,6 @@
 const checkTypeNumber = givenNumber => {
     if(givenNumber == null){
-        return `Error: Bro where is the parameter ?`
+        return `Error: Bro where is the parameter ? input kosong`
     } else if (typeof givenNumber != 'number'){   
         return `Error: Invalid data type`
     } else if(typeof givenNumber == 'number'){

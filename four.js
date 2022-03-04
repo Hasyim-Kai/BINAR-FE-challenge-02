@@ -2,12 +2,21 @@
 //     if (givenPassword == null) {
 //         return `Error: input yg diberikan kosong`
 //     } else if (typeof givenPassword != 'string') {
-//         return `Error: Invalid data type`
+//         return `Error: Invalid data type. Parameter type must be string`
 //     } else if (typeof givenPassword == 'string') {
-//         if (!givenPassword.includes('@')) {
-//             return `input harus berformat givenPassword dengan menambahkan @`
-//         }
 //         const REGEX_EMAIL = /[\w]+@[a-z]+\.[a-z]/
+
+//         if(givenPassword.length < 8){
+//             return 'Error: karakter harus lebih dari 8'
+//         } else if(){
+
+//         } else if(){
+            
+//         } else if(){
+            
+//         } else if(){
+            
+//         }
 //         return REGEX_EMAIL.test(givenPassword) ? `VALID` : `INVALID`
 //     }
 // }

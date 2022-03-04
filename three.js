@@ -17,4 +17,8 @@ console.log(checkEmail('apranata@binar.com'))
 console.log(checkEmail('apranata@binar'))
 console.log(checkEmail('apranata'))
 console.log(checkEmail())
-console.log(checkTypeNumber(checkEmail(3322))) // This will error bcs function checkTypeNumber isn't defined in this file
+try {
+    console.log(checkTypeNumber(checkEmail(3322)))
+} catch (error) {
+    console.log(`Error :  function checkTypeNumber isn't defined in this file`)
+}

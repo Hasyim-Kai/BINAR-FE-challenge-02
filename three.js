@@ -2,10 +2,10 @@ const checkEmail = email => {
     if (email == null) {
         return `Error: input yg diberikan kosong`
     } else if (typeof email != 'string') {
-        return `Error: Invalid data type`
+        return `Error : Invalid data type`
     } else if (typeof email == 'string') {
         if (!email.includes('@')) {
-            return `input harus berformat email dengan menambahkan @`
+            return `Error : input harus berformat email dengan menambahkan @`
         }
         const REGEX_EMAIL = /[\w]+@[a-z]+\.[a-z]/
         return REGEX_EMAIL.test(email) ? `VALID` : `INVALID`

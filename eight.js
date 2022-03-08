@@ -43,35 +43,47 @@ const getInfoPenjualan = dataPenjualan => {
   } else if (typeof dataPenjualan != 'object') {
     return `Error: Invalid data type. Parameter type must be object`
   } else if (typeof dataPenjualan == 'object') {
+    // variable preparation
     let totalKeuntungan = 0, totalModal = 0, penulisTerlaris = {}, produkBukuTerlaris = dataPenjualan[0];
 
     dataPenjualan.forEach(item => {
       totalKeuntungan += (item.hargaJual * item.totalTerjual)
       totalModal += (item.hargaBeli * (item.sisaStok + item.totalTerjual))
+
+      // get the biggest number of totalTerjual of each item
       if (produkBukuTerlaris.totalTerjual < item.totalTerjual) { produkBukuTerlaris = item }
+
+      // create an object of all writers and its
       if (item.penulis in penulisTerlaris) {
+        // if writer exist, plus it's count by 1
         penulisTerlaris[item.penulis] = penulisTerlaris[item.penulis] + 1;
       } else {
+      // if writer doesnt exist in the object, create it
         penulisTerlaris[`${item.penulis}`] = 1
       }
     });
 
-    const numberToRupiah = (number) => new Intl.NumberFormat(
+    // function to convert number to Rupiah Currency
+    const numberToRupiah = number => new Intl.NumberFormat(
       "id-ID", {
       style: "currency",
       currency: "IDR",
       minimumFractionDigits: 0
     }).format(number);
     
+    // get the penulisTerlars values as array, then find the biggest number
+    let mostPopularWriterCount = Math.max(...Object.values(penulisTerlaris))
+    // function to get the writer's name by it's value
     const getKeyByValue = (object, value) => Object.keys(object).find(key => object[key] === value);
-    let popularWriterCount = Math.max(...Object.values(penulisTerlaris))
     
-    let persentaseKeuntungan = (totalKeuntungan - totalModal) / totalModal * 100 / 100 * 100 + ' %';
-    totalKeuntungan = numberToRupiah(totalKeuntungan)
-    totalModal = numberToRupiah(totalModal)
-    produkBukuTerlaris = produkBukuTerlaris.namaProduk
-    penulisTerlaris = getKeyByValue(penulisTerlaris, popularWriterCount)
-    return { totalKeuntungan, totalModal, persentaseKeuntungan, produkBukuTerlaris, penulisTerlaris };
+    // Finalization
+    return { 
+      totalKeuntungan: numberToRupiah(totalKeuntungan),
+      totalModal: numberToRupiah(totalModal),
+      persentaseKeuntungan: (totalKeuntungan - totalModal) / totalModal * 100 / 100 * 100 + ' %',
+      produkBukuTerlaris: produkBukuTerlaris.namaProduk, 
+      penulisTerlaris: getKeyByValue(penulisTerlaris, mostPopularWriterCount)
+    };
   }
 }
 

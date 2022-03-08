@@ -26,11 +26,17 @@ const dataPenjualanPakAldi = [
   ]
 
 const getTotalPenjualan = dataPenjualan => {
+  if (dataPenjualan == null) {
+    return `Error: input yg diberikan kosong`
+  } else if (typeof dataPenjualan != 'object') {
+    return `Error: Invalid data type. Parameter type must be object`
+  } else if (typeof dataPenjualan == 'object') {
     let totalPenjualan = 0
     dataPenjualan.forEach(item => {
         totalPenjualan += item.totalTerjual
     });
     return totalPenjualan
+  }
 }
 
 console.log(getTotalPenjualan(dataPenjualanPakAldi))

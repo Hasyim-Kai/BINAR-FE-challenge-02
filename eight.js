@@ -47,7 +47,6 @@ const getInfoPenjualan = dataPenjualan => {
     let totalKeuntungan = 0, totalModal = 0, penulisTerlaris = {}, produkBukuTerlaris = dataPenjualan[0];
 
     dataPenjualan.forEach(item => {
-      // console.log((item.hargaJual - item.hargaBeli) * item.totalTerjual)
       totalKeuntungan += ((item.hargaJual - item.hargaBeli) * item.totalTerjual)
       totalModal += (item.hargaBeli * (item.sisaStok + item.totalTerjual))
 
@@ -56,7 +55,7 @@ const getInfoPenjualan = dataPenjualan => {
 
       // create an object of all writers and its
       if (item.penulis in penulisTerlaris) {
-        // if writer exist, plus it's count by 1
+        // if writer exist, sum the total Terjual
         penulisTerlaris[item.penulis] = penulisTerlaris[item.penulis] + item.totalTerjual;
       } else {
       // if writer doesnt exist in the object, create it

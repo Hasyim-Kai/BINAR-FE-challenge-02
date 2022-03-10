@@ -47,7 +47,8 @@ const getInfoPenjualan = dataPenjualan => {
     let totalKeuntungan = 0, totalModal = 0, penulisTerlaris = {}, produkBukuTerlaris = dataPenjualan[0];
 
     dataPenjualan.forEach(item => {
-      totalKeuntungan += (item.hargaJual * item.totalTerjual)
+      // console.log((item.hargaJual - item.hargaBeli) * item.totalTerjual)
+      totalKeuntungan += ((item.hargaJual - item.hargaBeli) * item.totalTerjual)
       totalModal += (item.hargaBeli * (item.sisaStok + item.totalTerjual))
 
       // get the biggest number of totalTerjual of each item
@@ -56,10 +57,10 @@ const getInfoPenjualan = dataPenjualan => {
       // create an object of all writers and its
       if (item.penulis in penulisTerlaris) {
         // if writer exist, plus it's count by 1
-        penulisTerlaris[item.penulis] = penulisTerlaris[item.penulis] + 1;
+        penulisTerlaris[item.penulis] = penulisTerlaris[item.penulis] + item.totalTerjual;
       } else {
       // if writer doesnt exist in the object, create it
-        penulisTerlaris[`${item.penulis}`] = 1
+        penulisTerlaris[`${item.penulis}`] = item.totalTerjual
       }
     });
 
@@ -76,11 +77,12 @@ const getInfoPenjualan = dataPenjualan => {
     // function to get the writer's name by it's value
     const getKeyByValue = (object, value) => Object.keys(object).find(key => object[key] === value);
     
+    // console.log(penulisTerlaris)
     // Finalization
     return { 
       totalKeuntungan: numberToRupiah(totalKeuntungan),
       totalModal: numberToRupiah(totalModal),
-      persentaseKeuntungan: (totalKeuntungan - totalModal) / totalModal * 100 / 100 * 100 + ' %',
+      persentaseKeuntungan: totalKeuntungan / totalModal * 100 + ' %',
       produkBukuTerlaris: produkBukuTerlaris.namaProduk, 
       penulisTerlaris: getKeyByValue(penulisTerlaris, mostPopularWriterCount)
     };
